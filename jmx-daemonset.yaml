@@ -1,0 +1,49 @@
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  annotations:
+    prometheus.io/scrape: 'true'
+  labels:
+    app: cassandra-dc1
+  name: jmx-exporter
+  namespace: monitoring
+spec:
+  selector:
+    matchLabels:
+      app: cassandra-dc1
+      environment: cat1
+      petapp: cassandra
+  template:
+    metadata:
+      annotations:
+        prometheus.io/scrape: "true"
+      creationTimestamp: null
+      labels:
+        app: cassandra-dc1
+        environment: cat1
+        petapp: cassandra
+      name: jmx-exporter
+    spec:
+      containers:
+      - image: sscaling/jmx-prometheus-exporter
+        imagePullPolicy: IfNotPresent
+        name: jmx-exporter
+        ports:
+        - containerPort: 7199
+          hostPort: 7199
+          name: jmx
+          protocol: TCP
+        resources:
+          limits:
+            cpu: 100m
+            memory: 256Mi
+          requests:
+            cpu: 100m
+            memory: 256Mi
+        terminationMessagePath: /dev/termination-log
+      dnsPolicy: ClusterFirst
+      hostNetwork: true
+      hostPID: true
+      restartPolicy: Always
+      securityContext: {}
+      terminationGracePeriodSeconds: 30

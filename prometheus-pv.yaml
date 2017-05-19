@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  annotations:
+    kubernetes.io/createdby: vsphere-volume-dynamic-provisioner
+    pv.kubernetes.io/bound-by-controller: "yes"
+    pv.kubernetes.io/provisioned-by: kubernetes.io/vsphere-volume
+    volume.beta.kubernetes.io/storage-class: standard-zeroed-thick
+  name: pvc-9b1a7e0c-f9bf-11e6-9885-005056ae6eff
+spec:
+  accessModes:
+  - ReadWriteOnce
+  capacity:
+    storage: 10Gi
+  claimRef:
+    apiVersion: v1
+    kind: PersistentVolumeClaim
+    name: prometheus-data-prometheus-0
+    namespace: monitoring
+  persistentVolumeReclaimPolicy: Delete
+  vsphereVolume:
+    fsType: ext4
+    volumePath: '[VM_PROV_EGAMING_01] kubevols/kubernetes-dynamic-pvc-9b1a7e0c-f9bf-11e6-9885-005056ae6eff.vmdk'

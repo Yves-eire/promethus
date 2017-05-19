@@ -1,0 +1,39 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: '{"kind":"Ingress","apiVersion":"extensions/v1beta1","metadata":{"name":"grafana","namespace":"monitoring","creationTimestamp":null,"labels":{"name":"grafana"}},"spec":{"backend":{"serviceName":"grafana","servicePort":3000},"rules":[{"host":"grapfana-prom.site.qa2.dc2.egaming.loro.swiss","http":{"paths":[{"path":"/","backend":{"serviceName":"grafana","servicePort":3000}}]}}]},"status":{"loadBalancer":{}}}'
+  labels:
+    name: grafana
+  name: grafana
+  namespace: monitoring
+spec:
+  backend:
+    serviceName: grafana
+    servicePort: 3000
+  rules:
+  - host: grafana-prom.site.qa2.dc2.egaming.loro.swiss
+    http:
+      paths:
+      - backend:
+          serviceName: grafana
+          servicePort: 3000
+        path: /
+status:
+  loadBalancer:
+    ingress:
+    - ip: 10.108.21.60
+    - ip: 10.108.21.56
+    - ip: 10.108.21.57
+    - ip: 10.108.21.62
+    - ip: 10.108.21.62
+    - ip: 10.108.21.59
+    - ip: 10.108.21.64
+    - ip: 10.108.21.55
+    - ip: 10.108.21.58
+    - ip: 10.108.21.63
+    - ip: 10.108.21.61
+    - ip: 10.108.21.73
+    - ip: 10.108.21.74
+    - ip: 10.108.21.75
+    - ip: 10.108.21.76

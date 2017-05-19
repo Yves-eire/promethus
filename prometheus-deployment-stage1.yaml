@@ -1,0 +1,61 @@
+apiVersion: "apps/v1beta1"
+kind: StatefulSet
+metadata:
+  name: prometheus
+  namespace: monitoring
+spec:
+  serviceName: prometheus
+  replicas: 1
+  template:
+    metadata:
+      annotations:
+        pod.alpha.kubernetes.io/initialized: "true"
+  replicas: 1
+  template:
+    metadata:
+      name: prometheus
+      labels:
+        app: prometheus
+    spec:
+      containers:
+      - name: prometheus
+        image: local-registry:5000/prom/prometheus:v1.5.2
+        args:
+          - '-storage.local.retention=168h0m0s'
+          - '-storage.local.memory-chunks=262144'
+          - '-storage.local.series-file-shrink-ratio=0.2'
+          - '-config.file=/etc/prometheus/prometheus.yml'
+          - '-storage.local.path=/prometheus-data/'
+          - '-alertmanager.url=http://10.101.207.56:9093'
+        ports:
+        - name: web
+          containerPort: 9090
+        resources:
+          limits:
+            cpu: 1.5
+            memory: 4096Mi
+          requests:
+            cpu: 1.5
+            memory: 4096Mi
+        volumeMounts:
+        - name: prometheus-config
+          mountPath: /etc/prometheus
+        - name: prometheus-data
+          mountPath: /prometheus-data
+      volumes:
+      - name: prometheus-config
+        configMap:
+          name: prometheus
+      nodeSelector:
+        accept_apps: "true"
+
+  volumeClaimTemplates:
+  - metadata:
+      name: prometheus-data
+      annotations:
+        volume.beta.kubernetes.io/storage-class: standard-zeroed-thick
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 10Gi

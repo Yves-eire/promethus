@@ -1,0 +1,9 @@
+apiVersion: storage.k8s.io/v1beta1
+kind: StorageClass
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: '{"kind":"StorageClass","apiVersion":"storage.k8s.io/v1beta1","metadata":{"name":"standard-thin","creationTimestamp":null},"provisioner":"kubernetes.io/vsphere-volume","parameters":{"diskformat":"thin"}}'
+  name: standard-thin
+parameters:
+  diskformat: thin
+provisioner: kubernetes.io/vsphere-volume

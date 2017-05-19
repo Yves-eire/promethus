@@ -1,0 +1,10 @@
+apiVersion: storage.k8s.io/v1beta1
+kind: StorageClass
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: '{"kind":"StorageClass","apiVersion":"storage.k8s.io/v1beta1","metadata":{"name":"standard-zeroed-thick","creationTimestamp":null},"provisioner":"kubernetes.io/vsphere-volume","parameters":{"diskformat":"zeroedthick"}}'
+  creationTimestamp: 2017-02-22T01:04:28Z
+  name: standard-zeroed-thick
+parameters:
+  diskformat: zeroedthick
+provisioner: kubernetes.io/vsphere-volume

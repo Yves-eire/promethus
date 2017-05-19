@@ -1,0 +1,21 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: "prometheus"
+  namespace: monitoring
+  labels:
+    name: "prometheus"
+spec:
+  backend:
+    serviceName: "prometheus"
+    servicePort: 9090
+  rules:
+    -
+      host: "prometheus.site.test1.dc1.loro.swiss"
+      http:
+        paths:
+          -
+            path: "/"
+            backend:
+              serviceName: "prometheus"
+              servicePort: 9090
